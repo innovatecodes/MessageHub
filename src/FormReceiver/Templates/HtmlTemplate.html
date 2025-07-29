@@ -1,0 +1,50 @@
+﻿<body style="
+    font-family: Arial, sans-serif;
+    background-color: #fdfdfd;
+    padding: 1rem;
+    border: 1px solid #dd4b25;
+    max-width: max-content;
+    margin: auto;
+    height: max-content;
+  ">
+    <main style="display: block; padding: 0.5rem 1rem; text-align: left">
+        <p>Prezado(a) <b>{Name}</b>, agradecemos seu contato.</p>
+        <p>
+            Esta é uma resposta automática para confirmar o recebimento da sua
+            mensagem em {FormattedDate}.
+        </p>
+    </main>
+
+    <hr style="max-width: 50%; background-color: #dd4b25; height: 1px; border: none" />
+
+    <footer style="
+      background-color: #fefefe;
+      padding: 0.5rem 1rem;
+      max-width: max-content;
+      margin: auto;
+    ">
+        <h3 style="display: inline-block; margin-top: 0">
+            Atenciosamente,<br />
+            <strong style="color: #dd4b25">{AppName}</strong>
+        </h3>
+
+        <br />
+
+        <ul style="
+        padding: 0;
+        font-family: Arial, sans-serif;
+        max-width: 100%;
+        overflow-x: auto;
+        color: #62676b;
+      ">
+            <li><strong>Site: </strong>{Site}</li>
+
+            <li>
+                <strong>E-mail: </strong>
+                <a href="mailto:{Sender}">{Sender}</a>
+            </li>
+
+            <li><strong>WhatsApp: </strong>{WhatsApp}</li>
+        </ul>
+    </footer>
+</body>

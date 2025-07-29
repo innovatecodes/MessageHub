@@ -1,0 +1,9 @@
+﻿Prezado(a) {Name}, agradecemos seu contato.
+Esta é uma resposta automática para confirmar o recebimento da sua mensagem em {FormattedDate}.
+
+Atenciosamente,
+{AppName}
+
+Site: {Site}
+E-mail: {Sender}
+WhatsApp: {WhatsApp}
