@@ -1,7 +1,7 @@
 ﻿using Common.Enums;
 using System.Text.Json.Serialization;
 
-namespace FormReceiver.ApplicationCore.DTOs.Response
+namespace FormReceiver.DTOs.Response
 {
     //Versão mais concisa com record posicional
     public record Response([property: JsonConverter(typeof(JsonStringEnumConverter))] Status Status, string Message, List<string>? Errors) 

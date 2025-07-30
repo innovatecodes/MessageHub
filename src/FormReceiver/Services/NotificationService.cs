@@ -2,10 +2,10 @@
 using Common.Enums;
 using Common.Events;
 using Common.Interfaces;
-using FormReceiver.ApplicationCore.DTOs.Request;
-using FormReceiver.ApplicationCore.DTOs.Response;
+using FormReceiver.DTOs.Request;
+using FormReceiver.DTOs.Response;
 
-namespace FormReceiver.ApplicationCore.Services
+namespace FormReceiver.Services
 {
     public class NotificationService : INotificationService<InputRequest, Response> , IDisposable
     {
@@ -37,10 +37,10 @@ namespace FormReceiver.ApplicationCore.Services
             _ = Task.Run(async () => {
                 try
                 {
-                    var result = await EventHandler(request, notificationMessage);
+                    var eventResult = await EventHandler(request, notificationMessage);
 
-                    if (result.Status == Status.Failed) 
-                        _logger.LogError(result.Message, "*** EventHandler ***");
+                    if (eventResult.Status == Status.Failed) 
+                        _logger.LogError(eventResult.Message, "*** EventHandler ***");
 
                 }
                 catch (Exception ex) 
@@ -57,19 +57,19 @@ namespace FormReceiver.ApplicationCore.Services
             if (OnFormSubmitted != null)
                 return await OnFormSubmitted.Invoke(this, new NotificationEventArgs(request, notificationMessage));
 
-            return new Response(Common.Enums.Status.Failed, AppConstants.EVENT_FAILURE_ERROR);
+            return new Response(Status.Failed, AppConstants.EVENT_FAILURE_ERROR);
         }
 
         private void SubscribeEventHandlers()
         {
             OnFormSubmitted += _autoReplyNotificationService.SendAsync;
-            OnFormSubmitted += _whatsAppNotificationService.SendAsync;
+            //OnFormSubmitted += _whatsAppNotificationService.SendAsync;
         }
 
         private void UnsubscribeEventHandlers()
         {
             OnFormSubmitted -= _autoReplyNotificationService.SendAsync;
-            OnFormSubmitted -= _whatsAppNotificationService.SendAsync;
+            //OnFormSubmitted -= _whatsAppNotificationService.SendAsync;
         }
     }
 }

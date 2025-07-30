@@ -4,12 +4,12 @@ using Common.Events;
 using Common.Interfaces;
 using Common.Options;
 using Common.Utils;
-using FormReceiver.ApplicationCore.DTOs.Request;
-using FormReceiver.ApplicationCore.DTOs.Response;
+using FormReceiver.DTOs.Request;
+using FormReceiver.DTOs.Response;
 using Microsoft.Extensions.Options;
 using System.Net.Mail;
 
-namespace FormReceiver.ApplicationCore.Services
+namespace FormReceiver.Services
 {
     public class AutoReplyNotificationService : EmailService, IAutoReplyNotificationService<Response>
     {
@@ -24,9 +24,9 @@ namespace FormReceiver.ApplicationCore.Services
         public async Task<Response> SendAsync(/*InputRequest request*/object? sender, NotificationEventArgs e)
         {
             if (e.Request is InputRequest request)
-                return await base.ExecuteAsync(request, AppConstants.EMAIL_AUTOREPLY_FAILURE_ERROR, e.NotificationMessage);
+                return await ExecuteAsync(request, AppConstants.EMAIL_AUTOREPLY_FAILURE_ERROR, e.NotificationMessage);
             
-            return new Response(Common.Enums.Status.Failed, AppConstants.EMAIL_AUTOREPLY_FAILURE_ERROR);
+            return new Response(Status.Failed, AppConstants.EMAIL_AUTOREPLY_FAILURE_ERROR);
         }
 
         protected override MailMessage Create(InputRequest request, string from, string to, string appName)
@@ -54,7 +54,7 @@ namespace FormReceiver.ApplicationCore.Services
 
             var applicationInfo = new ApplicationInfo {AppName = _applicationInfo.AppName, WhatsApp = _applicationInfo.WhatsApp, Site = _applicationInfo.Site};
 
-            var templates = TemplateUtils.CustomTemplateRenderer(request, _hostEnvironment, new BodyRenderOptions { From = from!, ApplicationInfo = applicationInfo });
+            var templates = TemplateUtils.CustomTemplateRenderer(request, _hostEnvironment, new BodyRenderOptions { From = from ?? _smtpInfo.From, ApplicationInfo = applicationInfo });
 
             return (templates[0], templates[1]);
         }

@@ -2,9 +2,9 @@ using Common.Constants;
 using Common.Exceptions;
 using Common.Interfaces;
 using Common.Options;
-using FormReceiver.ApplicationCore.DTOs.Request;
-using FormReceiver.ApplicationCore.DTOs.Response;
-using FormReceiver.ApplicationCore.Services;
+using FormReceiver.DTOs.Request;
+using FormReceiver.DTOs.Response;
+using FormReceiver.Services;
 using Microsoft.AspNetCore.Http.Json;
 using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.Extensions.Options;
@@ -34,8 +34,8 @@ builder.Services.AddScoped<IAutoReplyNotificationService<Response>, AutoReplyNot
 
 builder.Services.AddHttpClient<WhatsAppNotificationService>(http =>
 {
-    http.BaseAddress = new Uri(builder.Configuration["WhatsAppEndpoints:ZapHub:Url"]!);
-    http.DefaultRequestHeaders.Authorization = AuthenticationHeaderValue.Parse($"Bearer {builder.Configuration["WhatsAppEndpoints:ZapHub:Token"]}");
+    http.BaseAddress = new Uri(builder.Configuration["Endpoints:ZapHub:Url"]!);
+    http.DefaultRequestHeaders.Authorization = AuthenticationHeaderValue.Parse($"Bearer {builder.Configuration["Endpoints:ZapHub:Token"]}");
 });
 
 builder.Services.AddScoped<IWhatsAppNotificationService<Response>, WhatsAppNotificationService>();

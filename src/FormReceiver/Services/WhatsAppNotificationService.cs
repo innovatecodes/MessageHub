@@ -4,13 +4,13 @@ using Common.Events;
 using Common.Interfaces;
 using Common.Options;
 using Common.Utils;
-using FormReceiver.ApplicationCore.DTOs.Request;
-using FormReceiver.ApplicationCore.DTOs.Response;
+using FormReceiver.DTOs.Request;
+using FormReceiver.DTOs.Response;
 using Microsoft.Extensions.Options;
 using System.Text;
 using System.Text.Json;
 
-namespace FormReceiver.ApplicationCore.Services
+namespace FormReceiver.Services
 {
     public class WhatsAppNotificationService : BaseService, IWhatsAppNotificationService<Response>
     {
@@ -37,7 +37,7 @@ namespace FormReceiver.ApplicationCore.Services
                 {
                     var whatsAppMessageRequest = new WhatsAppMessageRequest
                     {
-                        To = $"{(int)CountryCode.BR}{request.WhatsApp}",
+                        To = $"{(int)CountryCode.BR}{request.WhatsApp}", // Quer dizer entao que os numero que vierem do forumulario de contao, nao receberao a mensagem?
                         Text = new TextContent
                         {
                             Body = FormattedMessage(request)

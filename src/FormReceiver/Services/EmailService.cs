@@ -1,11 +1,11 @@
 ﻿using Common.Constants;
 using Common.Interfaces;
 using Common.Options;
-using FormReceiver.ApplicationCore.DTOs.Request;
-using FormReceiver.ApplicationCore.DTOs.Response;
+using FormReceiver.DTOs.Request;
+using FormReceiver.DTOs.Response;
 using Microsoft.Extensions.Options;
 
-namespace FormReceiver.ApplicationCore.Services
+namespace FormReceiver.Services
 {
     public class EmailService : BaseService, IEmailService<InputRequest, Response> 
     {
@@ -20,7 +20,7 @@ namespace FormReceiver.ApplicationCore.Services
 
         public async Task<Response> SendEmailAsync(InputRequest request)
         {
-            return await base.ExecuteAsync(request, AppConstants.EMAIL_SEND_FAILURE_ERROR);
+            return await ExecuteAsync(request, AppConstants.EMAIL_SEND_FAILURE_ERROR);
         }
     }
 }

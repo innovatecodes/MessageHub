@@ -5,5 +5,5 @@ Atenciosamente,
 {AppName}
 
 Site: {Site}
-E-mail: {Sender}
+E-mail: {From}
 WhatsApp: {WhatsApp}

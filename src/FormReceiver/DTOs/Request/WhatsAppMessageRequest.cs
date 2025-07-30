@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace FormReceiver.ApplicationCore.DTOs.Request
+namespace FormReceiver.DTOs.Request
 {
     public sealed class WhatsAppMessageRequest
     {

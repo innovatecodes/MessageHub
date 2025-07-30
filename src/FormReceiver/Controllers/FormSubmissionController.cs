@@ -2,18 +2,18 @@
 using Common.Enums;
 using Common.Exceptions;
 using Common.Interfaces;
-using FormReceiver.ApplicationCore.DTOs.Request;
-using FormReceiver.ApplicationCore.DTOs.Response;
+using FormReceiver.DTOs.Request;
+using FormReceiver.DTOs.Response;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
 namespace FormReceiver.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("contact-form")]
     [ApiController]
     public class FormSubmissionController : ControllerBase
     {
-        #region POST /api/contactform/send
+        #region POST /contact-form/send 
         //[EnableRateLimiting("fixed-window")]
         [HttpPost("send", Name = "Enviar dados")]
         public async Task<ActionResult<Response>> Send(

@@ -4,14 +4,14 @@ using Common.Exceptions;
 using Common.Extensions;
 using Common.Options;
 using Common.Utils;
-using FormReceiver.ApplicationCore.DTOs.Request;
-using FormReceiver.ApplicationCore.DTOs.Response;
+using FormReceiver.DTOs.Request;
+using FormReceiver.DTOs.Response;
 using Microsoft.Extensions.Options;
 using System.Net;
 using System.Net.Mail;
 using System.Net.Sockets;
 
-namespace FormReceiver.ApplicationCore.Services
+namespace FormReceiver.Services
 {
     public abstract class BaseService 
     {
@@ -36,8 +36,8 @@ namespace FormReceiver.ApplicationCore.Services
             _hostEnvironment = hostEnvironment ?? throw new ArgumentNullException(nameof(hostEnvironment));
             StringUtils.GetSanitizedApplicationName(_hostEnvironment, out string appName, out int hasDot);
             _appName = TemplateUtils.ResolveAppName(appName, hasDot, _applicationInfo);
-            _from = _smtpInfo.From; /*_configuration["SmtpInfo:From"]*/
-            _to = _smtpInfo.To; /*_configuration["SmtpInfo:To"]*/
+            _from = _smtpInfo.From;
+            _to = _smtpInfo.To; 
         }
 
         public async Task<Response> ExecuteAsync(InputRequest request, string fallbackErrorMessage, string? notificationMessage = null)
@@ -47,8 +47,8 @@ namespace FormReceiver.ApplicationCore.Services
 
             try
             {
-                using var smtpClient = CreateStmpClient(_smtpInfo.SmtpServer, _smtpInfo.SmtpPort, _smtpInfo.SmtpUser.ValidateEmail(), _smtpInfo.SmtpPass);
-                using var message = this.Create(request, _from.ValidateEmail(), _to.ValidateEmail(), _appName);
+                using var smtpClient = CreateStmpClient(_smtpInfo.SmtpServer, _smtpInfo.SmtpPort, !_smtpInfo.SmtpUser.Contains("@") ? _smtpInfo.SmtpUser  : _smtpInfo.SmtpUser.ValidateEmail(), _smtpInfo.SmtpPass);
+                using var message = Create(request, _from.ValidateEmail(), _to.ValidateEmail(), _appName);
 
                 await smtpClient.SendMailAsync(message);
 
